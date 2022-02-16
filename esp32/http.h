@@ -38,7 +38,6 @@ namespace http
    *
    * @return String Formatted register request with mac adress
    */
-
   String registerDevice(String macAdress);
 
   /**
