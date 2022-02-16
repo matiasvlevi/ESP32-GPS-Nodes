@@ -8,7 +8,7 @@ We highly recommend using the Arduino extention for Vscode by Microsoft, as the 
 
 ### Support
 
-#### Node side (Arduino C/C++)
+#### Node side support (Arduino C/C++)
 
 - [x] Connect to a specific Wifi
 
@@ -64,7 +64,7 @@ http://arduino.esp8266.com/stable/package_esp8266com_index.json
 
 * Select board `ESP32 Dev Module`
 
-* Delete Arduino's WiFi.h library as it causes conflicts with the esp32's libraries.
+* Delete Arduino's `WiFi.h` library as it causes conflicts with the esp32's libraries.
 
 <br/>
 
