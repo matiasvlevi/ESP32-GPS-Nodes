@@ -55,11 +55,11 @@ function getIPFromRequest(req) {
     while (macAdress.includes(':'))
       macAdress = macAdress.replace(':', '');
 
-
+    const nodeIp = getIPFromRequest(req);
     let data = getData(api_data_path);
     let microcontroller = {
       type: 'ESP32',
-      ip: req.query.ip,
+      ip: nodeIp,
       mac: req.query.id
     }
 
