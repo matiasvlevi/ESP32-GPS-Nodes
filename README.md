@@ -38,6 +38,7 @@ We highly recommend using the Arduino extention for Vscode by Microsoft, as the 
 * * `main.ino` Main Arduino sketch
 * * * `http.h` HTTP Call formatting
 * * * `network.h` Wifi connect, handle network related tasks
+* * * `uenv.h` Network Credentials, Server info, User specified values.
 
 
 ### Listen Server source in `./node` (NodeJS)

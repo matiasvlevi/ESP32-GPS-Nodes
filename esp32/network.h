@@ -15,9 +15,10 @@ namespace network
    * @param pass Network's password
    * @param signalPin Which pin number to use to display network status
    *
+   * @example
    * <code>
    * String ip = network::connect("MY_NETWORK", "MY_PASSWORD", 2);
-   * Serial.println(ip)
+   * Serial.println(ip);
    * </code>
    *
    * @return String IPv4 adress
@@ -28,6 +29,13 @@ namespace network
    * @method IpToString
    *
    * Convert an Arduino IPAdress type to a Arduino String.
+   *
+   * @example
+   * <code>
+   * IPAdress myIp(10, 0, 0, 8);
+   * String Ipstr = IpToString(myIp);
+   * Serial.println(Ipstr);
+   * </code>
    *
    * @param ipAddress Ip to convert
    * @return String Ip as a string
@@ -43,4 +51,5 @@ namespace network
    */
   String getMacAdress(void);
 }
+
 #endif

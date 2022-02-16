@@ -8,52 +8,37 @@ WiFiClient client;
 // LED Pin
 short int signalPin = 2;
 
-// Sample send data
-int sampleData[] = {23, 54, 12, 34};
-
 void setup()
 {
   Serial.begin(115200);
 
   pinMode(signalPin, OUTPUT);
+  digitalWrite(signalPin, HIGH);
 
   String ip = network::connect(env::SSID, env::PASS, signalPin);
 
-  Serial.println("Connected");
-  Serial.println(ip);
+  Serial.println("Connected " + ip);
 
-  digitalWrite(signalPin, HIGH);
-
-  // HTTP Client connect
+  // HTTP Client register to server
   if (client.connect(env::SERVER, env::PORT))
   {
-    String data = network::getMacAdress();
-
-    Serial.println("Registered");
-    Serial.println(data);
-
-    String req = http::registerDevice(data);
-
-    client.println(http::GET("register", req));
+    client.println(http::GET("register", http::registerDevice(network::getMacAdress())));
     client.println();
   }
 }
 
+// Sample send data
+short int sampleData[] = {23, 54, 12, 34};
+
 void loop()
 {
-  // HTTP Client connect
+  // HTTP Client update data
   if (client.connect(env::SERVER, env::PORT))
   {
     // TODO: get GPS data and convert to HTTPContent String
 
-    // Send sample data
-    String request = http::GET("hit", http::toHTTPContent<int>(sampleData));
-
-    // HTTP client send
-    client.println(request);
+    client.println(http::GET("hit", http::toContent<short>(sampleData)));
     client.println();
-    // Debug display
-    Serial.println(request);
 
     delay(1000);
   }

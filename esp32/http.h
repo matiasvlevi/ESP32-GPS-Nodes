@@ -2,11 +2,12 @@
 
 #ifndef HTTP
 #define HTTP
+
 namespace http
 {
   template <class initialHTTPContent>
   /**
-   * @method toHTTPContent
+   * @method toContent
    * Format lists of data into HTTP content strings.
    *
    * @param data List of values to send
@@ -14,14 +15,14 @@ namespace http
    * @example
    * <code>
    * String myValues[] = { "Sample1", "Sample2", "Sample3" }
-   * String content = http::toHTTPContent<String>(myValues);
+   * String content = http::toContent<String>(myValues);
    *
    * String req = http::GET("api/url/path", content);
    * </code>
    *
    * @return String The formatted content of an HTTP request
    */
-  String toHTTPContent(initialHTTPContent data[]);
+  String toContent(initialHTTPContent data[]);
 
   /**
    * @method registerDevice
@@ -38,7 +39,6 @@ namespace http
    *
    * @return String Formatted register request with mac adress
    */
-
   String registerDevice(String macAdress);
 
   /**
@@ -57,4 +57,5 @@ namespace http
    */
   String GET(String path, String content);
 }
+
 #endif

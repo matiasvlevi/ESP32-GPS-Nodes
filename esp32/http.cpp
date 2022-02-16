@@ -3,7 +3,7 @@
 namespace http
 {
   template <class initialHTTPContent>
-  String toHTTPContent(initialHTTPContent data[])
+  String toContent(initialHTTPContent data[])
   {
     String content = "";
     int len = sizeof(data);
