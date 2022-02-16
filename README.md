@@ -12,7 +12,7 @@ Use one or multiple ESP32 microcontrolers with GPS modules, and have a listening
 
 - [ ] Handle GPS Module
 
-- [ ] (Hardware) Add ipex wifi antenae allowing a longer range
+- [ ] (Hardware) Add ipex wifi antenae allowing for a longer range
 
 
 #### Server side support (Nodejs, express)
