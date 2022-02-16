@@ -1,0 +1,12 @@
+{
+  "name": "esp32http",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./node/index.js",
+  "scripts": {
+    "server": "node ./node/index.js"
+  },
+  "keywords": [],
+  "author": "Club Prog Momo.",
+  "license": "MIT"
+}
