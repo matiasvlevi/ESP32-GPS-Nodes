@@ -1,2 +1,3 @@
 node/node_modules/
 node/.env
+esp32/uenv.h
