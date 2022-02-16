@@ -20,7 +20,7 @@ namespace http
 
   String registerDevice(String macAdress)
   {
-    return "id=" + macAdress;
+    return "id=" + macAdress + " ";
   }
 
   String GET(String path, String content)
