@@ -1,14 +1,6 @@
 #include "http.h"
 #include "network.h"
-
-// TODO: Add in separate files
-//  Network
-const char ssid[] = "YOUR_NETWORK_NAME";
-const char pass[] = "YOUR_NETWORK_PASSWORD";
-// Your Listener server IP:
-IPAddress server(192, 168, 67, 213);
-// Listener server Port
-const int port = 1880;
+#include "uenv.h"
 
 // HTTP Client
 WiFiClient client;
@@ -25,13 +17,15 @@ void setup()
 
   pinMode(signalPin, OUTPUT);
 
-  String ip = network::connect(ssid, pass, signalPin);
+  String ip = network::connect(env::SSID, env::PASS, signalPin);
 
   Serial.println("Connected");
   Serial.println(ip);
 
   digitalWrite(signalPin, HIGH);
-  if (client.connect(server, port))
+
+  // HTTP Client connect
+  if (client.connect(env::SERVER, env::PORT))
   {
     String data = network::getMacAdress();
 
@@ -47,7 +41,8 @@ void setup()
 
 void loop()
 {
-  if (client.connect(server, port))
+  // HTTP Client connect
+  if (client.connect(env::SERVER, env::PORT))
   {
     // TODO: get GPS data and convert to HTTPContent String
 
