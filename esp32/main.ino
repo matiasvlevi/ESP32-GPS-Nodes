@@ -44,7 +44,7 @@ void loop()
   // TODO: get GPS data and replace `float[] sampleData`
 
   // Send the request
-  //             http://serverIP:port/hit?0=23&1=54&2=12&3=34
+  //             http://serverIP:port/hit?0=47.20&1=51.82
   client.println(http::GET("hit", http::toContent<float, 2>(sampleData)));
   client.println();
   delay(UPDATE_DELAY);
