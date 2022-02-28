@@ -2,16 +2,14 @@
 
 namespace http
 {
-  template <class initialHTTPContent>
-  String toContent(initialHTTPContent data[])
+  template <class initialHTTPContent, unsigned int N>
+  String toContent(initialHTTPContent data[N])
   {
     String content = "";
-    int len = sizeof(data);
     char delim = '&';
-
-    for (int i = 0; i < len; i++)
+    for (int i = 0; i < N; i++)
     {
-      if (i == len - 1)
+      if (i == N - 1)
         delim = ' ';
       content += String(i) + "=" + String(data[i]) + String(delim);
     }

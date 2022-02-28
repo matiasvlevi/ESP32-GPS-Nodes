@@ -5,7 +5,7 @@
 
 namespace http
 {
-  template <class initialHTTPContent>
+  template <class initialHTTPContent, unsigned int N>
   /**
    * @method toContent
    * Format lists of data into HTTP content strings.
@@ -22,7 +22,7 @@ namespace http
    *
    * @return String The formatted content of an HTTP request
    */
-  String toContent(initialHTTPContent data[]);
+  String toContent(initialHTTPContent *data);
 
   /**
    * @method registerDevice

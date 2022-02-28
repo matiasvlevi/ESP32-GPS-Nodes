@@ -6,40 +6,46 @@
 WiFiClient client;
 
 // LED Pin
-short int signalPin = 2;
+uint8_t signalPin = 2;
 
 void setup()
 {
-  Serial.begin(115200);
+  Serial.begin(BAUD_RATE);
 
   pinMode(signalPin, OUTPUT);
   digitalWrite(signalPin, HIGH);
 
-  String ip = network::connect(env::SSID, env::PASS, signalPin);
+  // Connect to network
+  IPAddress ip = network::connect(env::SSID, env::PASS, signalPin);
+  Serial.println("Connected " + network::IpToString(ip));
 
-  Serial.println("Connected " + ip);
+  // Connect, if fail, abort.
+  if (!client.connect(env::SERVER, env::PORT))
+    return;
 
-  // HTTP Client register to server
-  if (client.connect(env::SERVER, env::PORT))
-  {
-    client.println(http::GET("register", http::registerDevice(network::getMacAdress())));
-    client.println();
-  }
+  // Send the request
+  //             http://serverIP:port/register?id=MACADRRESS
+  client.println(http::GET("register", http::registerDevice(network::getMacAdress())));
+  client.println();
 }
 
-// Sample send data
-short int sampleData[] = {23, 54, 12, 34};
+// Sample gps data
+float sampleData[] = {47.2012f, 51.8234f};
+// Arduino String reduces floats to .2f
+// for precise GPS location,
+// we would need a way to convert floating values to strings
 
 void loop()
 {
-  // HTTP Client update data
-  if (client.connect(env::SERVER, env::PORT))
-  {
-    // TODO: get GPS data and convert to HTTPContent String
+  // Connect, if fail, abort.
+  if (!client.connect(env::SERVER, env::PORT))
+    return;
 
-    client.println(http::GET("hit", http::toContent<short>(sampleData)));
-    client.println();
+  // TODO: get GPS data and replace `float[] sampleData`
 
-    delay(1000);
-  }
+  // Send the request
+  //             http://serverIP:port/hit?0=23&1=54&2=12&3=34
+  client.println(http::GET("hit", http::toContent<float, 2>(sampleData)));
+  client.println();
+  delay(UPDATE_DELAY);
 }

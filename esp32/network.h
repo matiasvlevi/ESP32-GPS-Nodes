@@ -15,15 +15,18 @@ namespace network
    * @param pass Network's password
    * @param signalPin Which pin number to use to display network status
    *
+   * @return ESP32's ip adress.
+   *
    * @example
    * <code>
-   * String ip = network::connect("MY_NETWORK", "MY_PASSWORD", 2);
+   * IPAddress ip = network::connect("MY_NETWORK", "MY_PASSWORD", 2);
    * Serial.println(ip);
+   * // output 10.0.0.49
    * </code>
    *
    * @return String IPv4 adress
    */
-  String connect(const char ssid[], const char pass[], int signalPin);
+  IPAddress connect(const char ssid[], const char pass[], int signalPin);
 
   /**
    * @method IpToString
@@ -35,6 +38,7 @@ namespace network
    * IPAdress myIp(10, 0, 0, 8);
    * String Ipstr = IpToString(myIp);
    * Serial.println(Ipstr);
+   * // output: 10.0.0.8
    * </code>
    *
    * @param ipAddress Ip to convert
