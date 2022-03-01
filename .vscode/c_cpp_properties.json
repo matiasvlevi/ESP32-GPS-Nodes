@@ -28,6 +28,8 @@
             ],
             "intelliSenseMode": "gcc-x64",
             "includePath": [
+                "C:\\Users\\matia\\Documents\\Arduino\\libraries\\EspSoftwareSerial\\src",
+                "C:\\Users\\matia\\Documents\\Arduino\\libraries\\TinyGPSPlus\\src",
                 "C:\\Users\\matia\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\1.0.6\\tools\\sdk\\include\\config",
                 "C:\\Users\\matia\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\1.0.6\\tools\\sdk\\include\\app_trace",
                 "C:\\Users\\matia\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\1.0.6\\tools\\sdk\\include\\app_update",

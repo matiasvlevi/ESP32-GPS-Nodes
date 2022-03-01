@@ -1,8 +1,16 @@
 #pragma once
 
+<<<<<<< Updated upstream
+=======
+// Microcontroller settings
+#define UPDATE_DELAY 1000
+#define BAUD_RATE 115200
+
+>>>>>>> Stashed changes
 #ifndef ENV_h
 #define ENV_h
 
+// Network settings
 namespace env
 {
   // TODO: Add in separate files
