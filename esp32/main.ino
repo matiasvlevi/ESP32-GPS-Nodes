@@ -18,29 +18,6 @@ void setup()
   pinMode(signalPin, OUTPUT);
   digitalWrite(signalPin, HIGH);
 
-<<<<<<< Updated upstream
-  String ip = network::connect(env::SSID, env::PASS, signalPin);
-
-  Serial.println("Connected " + ip);
-
-  // HTTP Client register to server
-  if (client.connect(env::SERVER, env::PORT))
-  {
-    client.println(http::GET("register", http::registerDevice(network::getMacAdress())));
-    client.println();
-  }
-}
-
-// Sample send data
-short int sampleData[] = {23, 54, 12, 34};
-
-void loop()
-{
-  // HTTP Client update data
-  if (client.connect(env::SERVER, env::PORT))
-  {
-    // TODO: get GPS data and convert to HTTPContent String
-=======
   // Connect to network
   // IPAddress ip = network::connect(env::SSID, env::PASS, signalPin);
   // Serial.println("Connected " + network::IpToString(ip));
@@ -66,15 +43,7 @@ void loop()
   // Connect, if fail, abort.
   // if (!client.connect(env::SERVER, env::PORT))
   //  return;
->>>>>>> Stashed changes
 
-    client.println(http::GET("hit", http::toContent<short>(sampleData)));
-    client.println();
-
-<<<<<<< Updated upstream
-    delay(1000);
-  }
-=======
   gpsout out = gps.getData();
 
   Serial.println(out.lat);
@@ -86,5 +55,4 @@ void loop()
   // client.println(http::GET("hit", http::toContent<float, 2>(sampleData)));
   // client.println();
   delay(UPDATE_DELAY);
->>>>>>> Stashed changes
 }
