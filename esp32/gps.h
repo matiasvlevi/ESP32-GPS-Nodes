@@ -1,20 +1,25 @@
-#include <Arduino.h>
-#include <TinyGPS++.h>
-#include <TinyGPSPlus.h>
+
+#include "TinyGPS++.h"
+
 #include <SoftwareSerial.h>
 
-// GPS Pins
-#define RX_PIN 17
-#define TX_PIN 16
+#ifndef GPSENV
+#define GPSENV
+namespace gpsenv
+{
+  uint8_t RX_PIN = 16;
+  uint8_t TX_PIN = 17;
+}
+#endif
 
 #ifndef GPSOUT
 #define GPSOUT
 
 struct gpsout
 {
-  float lat;
-  float lon;
-  float alt;
+  double lat;
+  double lon;
+  double alt;
 };
 
 #endif
@@ -25,15 +30,15 @@ struct gpsout
 class GPSDevice
 {
 private:
-  bool waitFix(uint16_t waitSecs);
-  uint32_t end_fix_time;
-  uint32_t end_wait_time;
+  bool waitFix(SoftwareSerial &serial);
   TinyGPSPlus device;
-  SoftwareSerial serial;
+  uint8_t fail;
 
 public:
   GPSDevice();
-  gpsout getData();
+  void init();
+  void begin(SoftwareSerial &serial, long baud_rate);
+  gpsout getData(SoftwareSerial &serial);
 };
 
 #endif

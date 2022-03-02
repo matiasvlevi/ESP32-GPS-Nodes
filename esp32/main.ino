@@ -4,19 +4,21 @@
 #include "uenv.h"
 
 // HTTP Client
-WiFiClient client;
+// WiFiClient client;
 
 // LED Pin
-short int signalPin = 2;
-
+// short int signalPin = 2;
 GPSDevice gps;
-
+SoftwareSerial gpsSerial(16, 17); // use UART #2
+TinyGPSPlus gpsDev;
 void setup()
 {
-  Serial.begin(115200);
 
-  pinMode(signalPin, OUTPUT);
-  digitalWrite(signalPin, HIGH);
+  Serial.begin(BAUD_RATE);
+
+  gps.begin(gpsSerial, 9600);
+  // pinMode(signalPin, OUTPUT);
+  // digitalWrite(signalPin, HIGH);
 
   // Connect to network
   // IPAddress ip = network::connect(env::SSID, env::PASS, signalPin);
@@ -32,27 +34,34 @@ void setup()
   // client.println();
 }
 
-// Sample gps data
-// float sampleData[] = {47.2012f, 51.8234f};
-// Arduino String reduces floats to .2f
-// for precise GPS location,
-// we would need a way to convert floating values to strings
-
+gpsout out;
 void loop()
 {
   // Connect, if fail, abort.
   // if (!client.connect(env::SERVER, env::PORT))
-  //  return;
+  //   return;
 
-  gpsout out = gps.getData();
+  // while (gpsSerial.available() > 0)
+  // {
+  //   char c = gpsSerial.read();
+  //   gpsDev.encode(c);
+  // }
 
-  Serial.println(out.lat);
-  Serial.println(out.lon);
-  Serial.println(out.alt);
+  out = gps.getData(gpsSerial);
+
+  // out = {gpsDev.location.lat(),
+  //        gpsDev.location.lng(),
+  //        gpsDev.altitude.meters()};
+  if (gpsDev.altitude.isUpdated())
+  {
+    Serial.println(String("Lat: ") + String(out.lat(), 16));
+    Serial.println(String("Lon: ") + String(out.lng(), 16));
+  }
+  // Serial.println(out.alt);
 
   // Send the request
   //             http://serverIP:port/hit?0=47.20&1=51.82
   // client.println(http::GET("hit", http::toContent<float, 2>(sampleData)));
   // client.println();
-  delay(UPDATE_DELAY);
+  // delay(UPDATE_DELAY);
 }

@@ -3,42 +3,40 @@
 GPSDevice::GPSDevice()
 {
   TinyGPSPlus device;
-  SoftwareSerial serial(RX_PIN, TX_PIN);
-  end_wait_time = 0;
-  end_fix_time = 0;
+  uint8_t fail = 0;
 };
 
-bool GPSDevice::waitFix(uint16_t waitSecs)
+void GPSDevice::init()
 {
+  Serial.println("Start");
+};
+
+void GPSDevice::begin(SoftwareSerial &serial, long baud_rate)
+{
+  serial.begin(baud_rate);
+}
+bool GPSDevice::waitFix(SoftwareSerial &serial)
+{
+
   // waits a specified number of seconds for a fix, returns true for good fix
-
-  uint8_t GPSchar;
-
-  end_wait_time = millis() + (waitSecs * 1000);
-
-  while (millis() < end_wait_time)
+  do
   {
-    if (serial.available() > 0)
+    fail++;
+    if (serial.available())
     {
-      GPSchar = serial.read();
-      device.encode(GPSchar);
+      device.encode(serial.read());
     }
-
-    if (
-        device.location.isUpdated() &&
-        device.altitude.isUpdated() &&
-        device.date.isUpdated())
-    {
-      end_fix_time = millis();
-      return true;
-    }
-  }
-  return false;
+  } while (serial.available() && fail < 255);
+  bool isConnected = (device.location.isUpdated() &&
+                      device.altitude.isUpdated() &&
+                      device.date.isUpdated());
+  fail = 0;
+  return isConnected;
 }
 
-gpsout GPSDevice::getData()
+gpsout GPSDevice::getData(SoftwareSerial &serial)
 {
-  if (waitFix(5))
+  if (waitFix(serial))
   {
     return {
         device.location.lat(),
@@ -47,6 +45,7 @@ gpsout GPSDevice::getData()
   }
   else
   {
+    ESP.restart();
     return {.0f, .0f, .0f};
   }
 };
