@@ -4,10 +4,10 @@
  * 
  * @return Date formatted in a string
  */
-const getDate = () => {
-  let a = new Date();
-  let hour = a.getHours();
-  let min = a.getMinutes();
+const getDate = (): string => {
+  let a: Date = new Date();
+  let hour: number | string = a.getHours();
+  let min: number | string = a.getMinutes();
 
   // Add `0` if number doesnt use 2 digits
   if (hour < 10) hour = `0${hour}`;
@@ -16,4 +16,4 @@ const getDate = () => {
   return `${hour}:${min}`;
 }
 
-module.exports = getDate;
+export default getDate;

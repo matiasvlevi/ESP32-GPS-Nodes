@@ -4,8 +4,8 @@ namespace network
   IPAddress connect(const char ssid[], const char pw[], int signalPin)
   {
     WiFi.begin(ssid, pw);
-    uint16_t fail = 0;
-    do
+    uint32_t fail = 0;
+    while (WiFi.status() != WL_CONNECTED)
     {
       if (fail % 2)
         digitalWrite(signalPin, HIGH);
@@ -17,9 +17,11 @@ namespace network
       Serial.println("Waiting for connection...");
 
       fail++;
-      if (fail > 255)
+      if (fail > 100)
+      {
         ESP.restart();
-    } while (WiFi.status() != WL_CONNECTED);
+      }
+    }
     return WiFi.localIP();
   }
   String IpToString(const IPAddress &ip)

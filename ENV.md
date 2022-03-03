@@ -1,3 +1,18 @@
+
+# Environement configs:
+
+### Node `.env`: 
+
+```
+PORT=3000
+API_PATH="./node/api/data.json"
+```
+
+<br/>
+
+### Arduino `uenv.h` :
+
+```cpp
 #pragma once
 
 // Microcontroller settings
@@ -15,9 +30,10 @@ namespace env
   const char SSID[] = "YOUR_NETWORK_SSID";
   const char PASS[] = "YOUR_NETWORK_PASSWORD";
   // Your Listener server IP:
-  IPAddress SERVER(192, 168, 225, 213);
+  IPAddress SERVER(0, 0, 0, 0);
   // Listener server Port
   const int PORT = 3000;
 }
 
 #endif
+```

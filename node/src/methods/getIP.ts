@@ -1,6 +1,6 @@
-// Promise Exec
-const util = require('util');
-const exec_ = require('child_process').exec;
+
+import util from 'util';
+import { exec as exec_ } from 'child_process';
 const exec = util.promisify(exec_);
 
 /**
@@ -11,7 +11,7 @@ const exec = util.promisify(exec_);
  */
 const getIP = async () => {
   let ret = await exec('ipconfig | findstr /c:"IPv4"');
-  if (ret.err !== null) {
+  if (ret.stderr !== null) {
     let lines = ret.stdout.split('\n');
     let ans = '';
     for (let i = lines.length - 1; i > 0; i--) {
@@ -21,10 +21,9 @@ const getIP = async () => {
       }
     }
     ans = ans.replace('\r', '');
-    let ip = ans.split(':')[1].trimStart();
-    return ip;
+    return ans.split(':')[1].trimStart();
   }
 };
 // TODO: Add support for `ifconfig` on linux (for raspberry pi's especially)
 
-module.exports = getIP;
+export default getIP;

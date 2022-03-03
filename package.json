@@ -2,9 +2,9 @@
   "name": "esp32http",
   "version": "1.0.0",
   "description": "",
-  "main": "./node/index.js",
+  "main": "./node/bin/index.js",
   "scripts": {
-    "server": "node ./node/index.js"
+    "server": "node ./node/bin/index.js"
   },
   "keywords": [],
   "author": "Club Prog Momo.",

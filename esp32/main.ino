@@ -1,17 +1,26 @@
 #include "http.h"
 #include "network.h"
+#include "gps.h"
 #include "uenv.h"
 
 // HTTP Client
 WiFiClient client;
 
-// LED Pin
+// Wifi Signal LED Pin
 uint8_t signalPin = 2;
+
+// GPS
+GPSDevice gps;
+SoftwareSerial gpsSerial(16, 17);
 
 void setup()
 {
-  Serial.begin(BAUD_RATE);
 
+  // Serials
+  Serial.begin(BAUD_RATE);
+  gpsSerial.begin(9600);
+
+  // Wifi Signal LED Pin
   pinMode(signalPin, OUTPUT);
   digitalWrite(signalPin, HIGH);
 
@@ -29,11 +38,7 @@ void setup()
   client.println();
 }
 
-// Sample gps data
-float sampleData[] = {47.2012f, 51.8234f};
-// Arduino String reduces floats to .2f
-// for precise GPS location,
-// we would need a way to convert floating values to strings
+gpsLocation out;
 
 void loop()
 {
@@ -41,11 +46,11 @@ void loop()
   if (!client.connect(env::SERVER, env::PORT))
     return;
 
-  // TODO: get GPS data and replace `float[] sampleData`
+  out = gps.getLocation(gpsSerial);
 
   // Send the request
-  //             http://serverIP:port/hit?0=47.20&1=51.82
-  client.println(http::GET("hit", http::toContent<float, 2>(sampleData)));
+  //             http://serverIP:port/hit?lon=LONGITUDE&lat=LATITUDE
+  client.println(http::GET("hit", http::location(out.lon, out.lat)));
   client.println();
   delay(UPDATE_DELAY);
 }
