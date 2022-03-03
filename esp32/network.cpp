@@ -18,9 +18,7 @@ namespace network
 
       fail++;
       if (fail > 100)
-      {
         ESP.restart();
-      }
     }
     return WiFi.localIP();
   }
