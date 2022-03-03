@@ -1,1 +1,14 @@
-{"58bf2592c678":{"type":"ESP32","ip":"192.168.67.12","mac":"58:bf:25:92:c6:78"},"58bf2592f1b4":{"type":"ESP32","ip":"192.168.67.115","mac":"58:bf:25:92:f1:b4"},"58bf2592c82c":{"type":"ESP32","ip":"192.168.67.194","mac":"58:bf:25:92:c8:2c"}}
+{
+  "testdevice": {
+    "type": "ESP32",
+    "ip": "1",
+    "mac": "testdevice",
+    "lastUpdated": "Wed Mar 02 2022 22:08:19 GMT-0500 (Eastern Standard Time)"
+  },
+  "testdevice2": {
+    "type": "ESP32",
+    "ip": "1",
+    "mac": "testdevice2",
+    "lastUpdated": "Wed Mar 02 2022 22:07:45 GMT-0500 (Eastern Standard Time)"
+  }
+}

@@ -1,0 +1,11 @@
+html,body {
+  margin: 0rem;
+}
+
+#map { 
+  min-height: 100vh;
+  height: 100vh !important;
+  min-width: 100vw;
+  width: 100vw !important;
+}
+

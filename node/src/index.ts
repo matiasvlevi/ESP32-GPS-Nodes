@@ -1,75 +1,55 @@
-import { readFileSync, writeFileSync, existsSync } from 'fs'
-import getIP from './methods/getIP';
-import getDate from './methods/getDate'
-import { config as conf, DotenvParseOutput } from 'dotenv';
-
-const config: any = conf({ path: './node/.env' }).parsed;
-
-const port = config.PORT;
 
 import express from 'express';
+
+import getIPFromRequest from './methods/getIpFromRequest'
+import getParentPath from './methods/getParentPath'
+
+import logger from './logger/'
+import network from './network/'
+import { ESP32, Device } from './types/'
+
 const server: express.Express = express();
 
-let api_data_path = './node/api/data.json';
-const getData = (path: string) => {
+// Current way of recieving from the ESP32
+server.get('/hit', (req) => {
+  const nodeIp = getIPFromRequest(req);
 
-  let data;
-  if (existsSync(path))
-    data = JSON.parse(readFileSync(path, 'utf-8'));
-  else
-    data = {};
+  // Get device with the same IP
+  let device: Device | undefined = network.findByIP(nodeIp);
+  if (device === undefined) return;
 
-  return data;
-}
+  // Inject GPS coordinates
+  device.setPos(
+    `${req.query['lon']}`,
+    `${req.query['lat']}`
+  );
 
-function getIPFromRequest(req: any) {
-  let ip = (req.header('x-forwarded-for') || req.connection.remoteAddress).split(':');
-  ip = ip[ip.length - 1];
-  return ip;
-}
+  // Write the device list
+  network.update(device);
+  network.save();
 
-(async () => {
-  // Get ip adress from ipconfig
-  const ip = await getIP();
+  // Log update
+  logger.hit(device.ip, req.query);
+});
 
-  // Current way of recieving from the ESP32
-  server.get('/hit', (req, res) => {
-    const nodeIp = getIPFromRequest(req);
-    let msg =
-      `[\x1b[36m${getDate()}\x1b[0m]` +
-      `[\x1b[32m${nodeIp}\x1b[0m]  `;
+server.get('/register', (req) => {
+  const macAdress: string = `${req.query.id}`;
+  const nodeIp = getIPFromRequest(req);
 
+  network.load();
 
-    // Add data in message 
-    for (let key in req.query) {
-      msg += `${key}: ${req.query[key]}  `;
-    }
-    console.log(msg);
-  });
+  let microcontroller: ESP32 = new Device(macAdress, nodeIp);
 
-  server.get('/register', (req, res) => {
-    let macAdress: string = (`${req.query.id}`) || '';
-    while (macAdress.includes(':'))
-      macAdress = macAdress.replace(':', '');
+  logger.login(macAdress);
+  network.update(microcontroller);
+  network.save();
+});
 
-    const nodeIp = getIPFromRequest(req);
-    let data: any = getData(api_data_path);
-    let microcontroller = {
-      type: 'ESP32',
-      ip: nodeIp,
-      mac: req.query.id,
-      lastUpdated: new Date().toString()
-    }
+console.log(getParentPath(2));
 
-    console.log(`ESP32 [${req.query.id}]`);
-    data[macAdress] = microcontroller;
-    writeFileSync(api_data_path, JSON.stringify(data), 'utf-8');
-  });
+server.use(express.static(getParentPath(2) + '/api'));
 
-  server.use(express.static(__dirname + '/api'));
-
-  // Server listen
-  server.listen(1880, () => {
-    console.log(`Listener at http://${ip}:${port}`);
-  });
-})()
+// Server listen
+server.listen(network.PORT, () => {
+  console.log(`Listener at http://127.0.0.1:${network.PORT}`);
+});
