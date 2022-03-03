@@ -14,7 +14,7 @@ We highly recommend using the Arduino extention for Vscode by Microsoft, as the 
 
 - [x] Send HTTP GET calls to a specific server
 
-- [ ] Handle GPS Module
+- [x] Handle GPS Module
 
 - [ ] (Hardware) Add ipex wifi antenae allowing for a longer range
 
@@ -23,9 +23,11 @@ We highly recommend using the Arduino extention for Vscode by Microsoft, as the 
 
 - [x] Record microcontroler data, and label each one uniquely
 
+- [x] Web app displaying known & connected nodes (GPS Map)
+
 - [ ] Web REST API 
 
-- [ ] Web app displaying known & connected nodes (Eventually a GPS Map, Data Graphs) 
+- [ ] Meta data, graphs, etc 
 
 
 <br/>
@@ -35,22 +37,24 @@ We highly recommend using the Arduino extention for Vscode by Microsoft, as the 
 ### Microcontroller source in `./esp32` (C/C++)
 
 * `./esp32/`
-* * `main.ino` Main Arduino sketch
+* *  * `main.ino` Main Arduino sketch
+* * * `gps.h` TinyGPS and SoftwareSerial Bindings
 * * * `http.h` HTTP Call formatting
 * * * `network.h` Wifi connect, handle network related tasks
-* * * `uenv.h` Network Credentials, Server info, User specified values.
+* * * `uenv.h` Network Credentials, Server info, User specified values. [./ENV.md](See more here)
 
 
 ### Listen Server source in `./node` (NodeJS)
 
 * `./node/`
-* * `index.js` Listening server entrypoint
+* * `.env` Environement values for the server & web application [./ENV.md](See more here)
 * * `src/`
-* * * `getIP.js` Fetch local ip from `ipconfig` (TODO: support for `ifconfig`)
-* * * `getDate.js` Get a formatted date string
+* * * TypeScript Server source
+* * `bin/`
+* * * JavaScript compiled server
 * * `api/`
-* * * `api.js` web app frontend JS
-* * * `index.html` Soon to be web app
+* * * `data.json` Collected Data
+* * * `index.html` Map Web application
 
 <br/>
 
@@ -86,3 +90,6 @@ Run from project root
 ```
 npm run server
 ```
+
+<br/><br/>
+
