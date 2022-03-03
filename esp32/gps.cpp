@@ -3,49 +3,21 @@
 GPSDevice::GPSDevice()
 {
   TinyGPSPlus device;
-  uint8_t fail = 0;
 };
 
-void GPSDevice::init()
+gpsLocation GPSDevice::getLocation(SoftwareSerial &serial)
 {
-  Serial.println("Start");
-};
-
-void GPSDevice::begin(SoftwareSerial &serial, long baud_rate)
-{
-  serial.begin(baud_rate);
-}
-bool GPSDevice::waitFix(SoftwareSerial &serial)
-{
-
-  // waits a specified number of seconds for a fix, returns true for good fix
-  do
+  while (!(device.location.isUpdated()))
   {
-    fail++;
-    if (serial.available())
+    if (serial.available() > 0)
     {
       device.encode(serial.read());
     }
-  } while (serial.available() && fail < 255);
-  bool isConnected = (device.location.isUpdated() &&
-                      device.altitude.isUpdated() &&
-                      device.date.isUpdated());
-  fail = 0;
-  return isConnected;
-}
+  };
 
-gpsout GPSDevice::getData(SoftwareSerial &serial)
-{
-  if (waitFix(serial))
+  if (device.location.isUpdated())
   {
-    return {
-        device.location.lat(),
-        device.location.lng(),
-        device.altitude.meters()};
-  }
-  else
-  {
-    ESP.restart();
-    return {.0f, .0f, .0f};
-  }
+    return {device.location.lat(), device.location.lng()};
+  };
+  return {0.0, 0.0};
 };

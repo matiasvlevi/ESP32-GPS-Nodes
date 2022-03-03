@@ -5,24 +5,16 @@
 
 namespace http
 {
-  template <class initialHTTPContent>
   /**
-   * @method toContent
-   * Format lists of data into HTTP content strings.
+   * @method location
    *
-   * @param data List of values to send
+   * Format two doubles, into an HTTP parameter string.
    *
-   * @example
-   * <code>
-   * String myValues[] = { "Sample1", "Sample2", "Sample3" }
-   * String content = http::toContent<String>(myValues);
-   *
-   * String req = http::GET("api/url/path", content);
-   * </code>
-   *
-   * @return String The formatted content of an HTTP request
+   * @param longitude
+   * @param latitude
+   * @return String
    */
-  String toContent(initialHTTPContent data[]);
+  String location(double longitude, double latitude);
 
   /**
    * @method registerDevice

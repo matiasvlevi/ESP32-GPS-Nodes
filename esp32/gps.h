@@ -15,11 +15,10 @@ namespace gpsenv
 #ifndef GPSOUT
 #define GPSOUT
 
-struct gpsout
+struct gpsLocation
 {
   double lat;
   double lon;
-  double alt;
 };
 
 #endif
@@ -30,15 +29,11 @@ struct gpsout
 class GPSDevice
 {
 private:
-  bool waitFix(SoftwareSerial &serial);
   TinyGPSPlus device;
-  uint8_t fail;
 
 public:
   GPSDevice();
-  void init();
-  void begin(SoftwareSerial &serial, long baud_rate);
-  gpsout getData(SoftwareSerial &serial);
+  gpsLocation getLocation(SoftwareSerial &serial);
 };
 
 #endif

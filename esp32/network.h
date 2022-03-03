@@ -23,7 +23,7 @@ namespace network
    *
    * @return String IPv4 adress
    */
-  String connect(const char ssid[], const char pass[], int signalPin);
+  IPAddress connect(const char ssid[], const char pass[], int signalPin);
 
   /**
    * @method IpToString

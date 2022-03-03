@@ -1,7 +1,7 @@
 #include "network.h"
 namespace network
 {
-  String connect(const char ssid[], const char pw[], int signalPin)
+  IPAddress connect(const char ssid[], const char pw[], int signalPin)
   {
     WiFi.begin(ssid, pw);
     uint32_t fail = 0;
@@ -22,7 +22,7 @@ namespace network
         ESP.restart();
       }
     }
-    return IpToString(WiFi.localIP());
+    return WiFi.localIP();
   }
   String IpToString(const IPAddress &ip)
   {
