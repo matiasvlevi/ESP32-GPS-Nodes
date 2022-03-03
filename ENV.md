@@ -3,6 +3,8 @@
 
 ### Node `.env`: 
 
+Placed in `./node/.env`
+
 ```
 PORT=3000
 API_PATH="./node/api/data.json"
@@ -11,6 +13,8 @@ API_PATH="./node/api/data.json"
 <br/>
 
 ### Arduino `uenv.h` :
+
+Placed in `./esp32/uenv.h`
 
 ```cpp
 #pragma once
