@@ -41,13 +41,13 @@ We highly recommend using the Arduino extention for Vscode by Microsoft, as the 
 * * * `gps.h` TinyGPS and SoftwareSerial Bindings
 * * * `http.h` HTTP Call formatting
 * * * `network.h` Wifi connect, handle network related tasks
-* * * `uenv.h` Network Credentials, Server info, User specified values. [./ENV.md](See more here)
+* * * `uenv.h` Network Credentials, Server info, User specified values. [See more here](ENV.md)
 
 
 ### Listen Server source in `./node` (NodeJS)
 
 * `./node/`
-* * `.env` Environement values for the server & web application [./ENV.md](See more here)
+* * `.env` Environement values for the server & web application [See more here](ENV.md)
 * * `src/`
 * * * TypeScript Server source
 * * `bin/`
