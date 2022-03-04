@@ -5,13 +5,13 @@ import { config as conf } from 'dotenv'
 import getIPFromRequest from '../methods/getIpFromRequest'
 import logger from '../logger'
 
-import { ESP32, ESP32List, Device } from '../types'
+import { ESP32, ESP32_KEYMAP, Device } from '../types'
 
 // Get .env contents
 const config: any = conf({ path: './node/.env' }).parsed;
 
 class Network {
-  private devices: ESP32List;
+  private devices: ESP32_KEYMAP;
   constructor() {
     this.devices = {};
   }
@@ -32,15 +32,12 @@ class Network {
       const deviceIp = getIPFromRequest(req);
       this.addDevice(mac, deviceIp);
     };
-    this.devices[mac].gps = {
-      lon: `${lon}`,
-      lat: `${lat}`
-    }
+    this.devices[mac].setGps(lon, lat)
     this.devices[mac].lastUpdated = new Date().toString();
   }
   load(path: string = config.API_PATH) {
     if (existsSync(path)) {
-      let devices: ESP32List = JSON.parse(readFileSync(path, 'utf-8'));
+      let devices: ESP32_KEYMAP = JSON.parse(readFileSync(path, 'utf-8'));
       for (let mac in devices) {
         this.parse(devices[mac]);
       }
