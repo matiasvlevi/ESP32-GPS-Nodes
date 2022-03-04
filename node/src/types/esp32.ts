@@ -1,33 +1,37 @@
-import { gpsData } from './gps'
+import { gpsData, GPS } from './gps'
+import { dhtData, DHT } from './dht'
 
-export type ESP32List = {
-  [key: string]: ESP32;
-}
 
 export interface Device {
   type: string;
   ip: string;
   mac: string;
-  gps?: gpsData;
   lastUpdated: string;
-  setPos(lon: string, lat: string): void;
 }
 
-export class ESP32 implements Device {
-  type: string;
+// Other property "templates" can be added for different peripherials
+// export interface MySensor {
+//   value: string;
+//   setValue(newValue: string): void;
+// }
+// 
+// class ESP8266 implements Device, MySensor { ... }
+
+export class ESP32 implements Device, GPS {
+  type: string = 'ESP32';
   ip: string;
   mac: string;
-  gps?: gpsData;
-  lastUpdated: string;
+  gps?: gpsData = undefined;
+  lastUpdated: string = new Date().toString();
   constructor(mac: string, ip: string) {
-    this.type = 'ESP32';
     this.ip = ip;
     this.mac = mac;
-    this.gps = undefined;
-    this.lastUpdated = new Date().toString();
   }
-  setPos(lon: string, lat: string) {
+  setGps(lon: string, lat: string) {
     this.gps = { lon, lat }
   }
 }
 
+export type ESP32_KEYMAP = {
+  [key: string]: ESP32;
+}
