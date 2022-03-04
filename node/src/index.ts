@@ -1,13 +1,10 @@
 import express from 'express';
 
-import getIPFromRequest from './methods/getIpFromRequest'
-import getParentPath from './methods/getParentPath'
-
+import utils from './methods/'
 import logger from './logger/'
 import network from './network/'
 
 const server: express.Express = express();
-
 
 // Current way of recieving from the ESP32
 server.get('/hit', (req) => {
@@ -32,8 +29,9 @@ server.get('/register', (req) => {
   let mac: string = req.query.id;
 
   // get the device IP from the client request
-  const deviceIp = getIPFromRequest(req);
+  const deviceIp = utils.getIPFromRequest(req);
 
+  // Load device network data 
   network.load();
 
   // Update the device in the device network data
@@ -46,11 +44,9 @@ server.get('/register', (req) => {
   logger.login(mac);
 });
 
-console.log(getParentPath(2));
-
 // host the web application directory,
 // allowing access to the 'data.json' through http, and map webpages.  
-server.use(express.static(getParentPath(2) + '/api'));
+server.use(express.static(utils.getParentPath(2) + '/api'));
 
 // Server listen
 server.listen(network.SERVER_PORT, () => {
