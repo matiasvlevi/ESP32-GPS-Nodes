@@ -6,7 +6,6 @@ import getIPFromRequest from '../methods/getIpFromRequest'
 import logger from '../logger'
 
 import { ESP32, ESP32List, Device } from '../types'
-import replaceAll from '../methods/replaceAll';
 
 // Get .env contents
 const config: any = conf({ path: './node/.env' }).parsed;
