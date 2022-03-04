@@ -19,14 +19,14 @@ export interface Device {
 
 export class ESP32 implements Device, GPS {
   type: string = 'ESP32';
-  ip: string;
-  mac: string;
-  gps?: gpsData = undefined;
   lastUpdated: string = new Date().toString();
+
+  ip: string; mac: string;
   constructor(mac: string, ip: string) {
-    this.ip = ip;
-    this.mac = mac;
+    this.ip = ip; this.mac = mac;
   }
+
+  gps?: gpsData = undefined;
   setGps(lon: string, lat: string) {
     this.gps = { lon, lat }
   }

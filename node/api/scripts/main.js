@@ -1,5 +1,6 @@
-var map;
-let markers = [];
+let map;
+let markers = {};
+const TIMEOUT = 5000;
 
 // Add a marker to the map
 function marker(mapObj, point, text = '') {
@@ -10,7 +11,6 @@ function marker(mapObj, point, text = '') {
 
   return m;
 }
-
 
 // Load ESP32 data 
 function loadMarkers(update = false) {
@@ -26,13 +26,12 @@ function createMarkers(mapObj, devices, update = false) {
   nodes = Object.values(devices);
   for (let i = 0; i < nodes.length; i++) {
     if (nodes[i].gps !== undefined) {
-      if (!update) mapObj.removeLayer(markers[i]);
+      if (!update) mapObj.removeLayer(markers[nodes[i].mac]);
       // Save marker with the same index as it's corresponding node.
-      markers[i] = (marker(mapObj, [nodes[i].gps.lat, nodes[i].gps.lon], nodes[i].ip));
-
+      markers[nodes[i].mac] = marker(mapObj, [nodes[i].gps.lat, nodes[i].gps.lon], nodes[i].ip);
     }
   }
-  setTimeout(loadMarkers, 1500)
+  setTimeout(loadMarkers, TIMEOUT)
 }
 
 // Window load event
