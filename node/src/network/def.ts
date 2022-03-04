@@ -14,8 +14,8 @@ class Network {
     this.devices = {};
   }
   public PORT = config.PORT;
-  update(device: Device) {
-    this.devices[replaceAll(device.mac, ':')] = new Device(device.mac, device.ip);
+  update(device: ESP32) {
+    this.devices[replaceAll(device.mac, ':')] = new ESP32(device.mac, device.ip);
   }
   load(path: string = config.API_PATH) {
     if (existsSync(path)) {
@@ -33,8 +33,8 @@ class Network {
       this.devices
     ), 'utf-8');
   }
-  findByIP(value: string): Device | undefined {
-    let ans: Device[] = Object.values(this.devices).filter((x: Device) => {
+  findByIP(value: string): ESP32 | undefined {
+    let ans: ESP32[] = Object.values(this.devices).filter((x: Device) => {
       return x.ip.includes(value);
     });
 

@@ -1,10 +1,10 @@
 import { gpsData } from './gps'
 
 export type ESP32List = {
-  [key: string]: Device;
+  [key: string]: ESP32;
 }
 
-export interface ESP32 {
+export interface Device {
   type: string;
   ip: string;
   mac: string;
@@ -13,7 +13,7 @@ export interface ESP32 {
   setPos(lon: string, lat: string): void;
 }
 
-export class Device implements ESP32 {
+export class ESP32 implements Device {
   type: string;
   ip: string;
   mac: string;
