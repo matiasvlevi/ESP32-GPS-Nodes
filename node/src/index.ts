@@ -13,10 +13,10 @@ server.get('/hit', (req) => {
   let mac: string = req.query.id;
 
   network.load();
-
-  // Write the device list
-  network.update(req, mac, `${req.query['lon']}`, `${req.query['lat']}`);
-
+  network.update(req, mac,
+    `${req.query['lon']}`,
+    `${req.query['lat']}`
+  );
   network.save();
 
   // Log update
@@ -31,13 +31,8 @@ server.get('/register', (req) => {
   // get the device IP from the client request
   const deviceIp = utils.getIPFromRequest(req);
 
-  // Load device network data 
   network.load();
-
-  // Update the device in the device network data
   network.addDevice(mac, deviceIp);
-
-  // Save the device network data
   network.save();
 
   // Display new device's info in the console
