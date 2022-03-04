@@ -7,8 +7,8 @@
 #define GPSENV
 namespace gpsenv
 {
-  uint8_t RX_PIN = 16;
-  uint8_t TX_PIN = 17;
+  uint8_t GPS_TX_PIN = 16;
+  uint8_t GPS_RX_PIN = 17;
 }
 #endif
 

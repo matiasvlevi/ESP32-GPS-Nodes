@@ -11,11 +11,12 @@ uint8_t signalPin = 2;
 
 // GPS
 GPSDevice gps;
-SoftwareSerial gpsSerial(16, 17);
+SoftwareSerial gpsSerial(
+    gpsenv::GPS_TX_PIN,
+    gpsenv::GPS_RX_PIN);
 
 void setup()
 {
-
   // Serials
   Serial.begin(BAUD_RATE);
   gpsSerial.begin(9600);
