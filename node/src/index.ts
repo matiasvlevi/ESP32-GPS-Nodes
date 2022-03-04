@@ -12,10 +12,12 @@ const server: express.Express = express();
 
 // Current way of recieving from the ESP32
 server.get('/hit', (req) => {
-  const nodeIp = getIPFromRequest(req);
+  // get the device IP from the client request
+  const deviceIp = getIPFromRequest(req);
 
-  // Get device with the same IP
-  let device: Device | undefined = network.findByIP(nodeIp);
+  // Get device with the same IP, abort if does not exist
+  // A non registered device can't call '/hit'
+  let device: ESP32 | undefined = network.findByIP(deviceIp);
   if (device === undefined) return;
 
   // Inject GPS coordinates
@@ -29,20 +31,30 @@ server.get('/hit', (req) => {
   network.save();
 
   // Log update
-  logger.hit(device.ip, req.query);
+  logger.hit(device, req.query);
 });
 
 server.get('/register', (req) => {
+  // Get mac adress from call parameters
   const macAdress: string = `${req.query.id}`;
-  const nodeIp = getIPFromRequest(req);
 
+  // get the device IP from the client request
+  const deviceIp = getIPFromRequest(req);
+
+  // Load most recent device network from json
   network.load();
 
-  let microcontroller: ESP32 = new Device(macAdress, nodeIp);
+  // Create a device instance out of this information
+  let device: Device = new ESP32(macAdress, deviceIp);
 
-  logger.login(macAdress);
-  network.update(microcontroller);
+  // Update the device in the device network data
+  network.update(device);
+
+  // Save the device network data
   network.save();
+
+  // Display new device's info in the console
+  logger.login(device);
 });
 
 console.log(getParentPath(2));
