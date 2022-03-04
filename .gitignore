@@ -1,5 +1,5 @@
 node/node_modules/
 node/.env
 esp32/uenv.h
-bin/*
+bin/
 node/api/data.json
