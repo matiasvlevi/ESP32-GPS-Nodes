@@ -1,3 +1,3 @@
 import getDate from './getDate'
-
-export default { getDate }
+import { login, hit, error } from './logs'
+export default { getDate, login, hit, error }
