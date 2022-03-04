@@ -7,12 +7,14 @@ GPSDevice::GPSDevice()
 
 gpsLocation GPSDevice::getLocation(SoftwareSerial &serial)
 {
-  while (!(device.location.isUpdated()))
+  uint8_t fail = 0;
+  while (!(device.location.isUpdated()) && fail < 250)
   {
     if (serial.available() > 0)
     {
       device.encode(serial.read());
     }
+    fail++;
   };
 
   if (device.location.isUpdated())
