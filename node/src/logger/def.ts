@@ -1,22 +1,22 @@
-import getDate from "../methods/getDate";
-import { ESP32 } from "../types/"
+import getDate from "../methods/getDate"
+import network from "../network"
 
 class Logger {
   constructor() { }
-  login(device: ESP32) {
+  login(mac: string) {
     console.log(
-      `Device [\x1b[32m${device.mac}\x1b[0m] logged in ` +
-      `with ip  [\x1b[32m${device.ip}\x1b[0m]`
+      `Device [\x1b[32m${mac}\x1b[0m] logged in ` +
+      `with ip  [\x1b[32m${network.getDevice(mac)?.ip || 'X.X.X.X'}\x1b[0m]`
     );
   }
   error(msg: string) {
     console.error("Error >> " + msg);
   }
-  hit(device: ESP32, data: any) {
+  hit(mac: string, data: any) {
     // Log update
     let msg =
       `[\x1b[36m${getDate()}\x1b[0m]` +
-      `[\x1b[32m${device.ip}\x1b[0m]  `;
+      `[\x1b[32m${mac}\x1b[0m]  `;
 
     // Add data in message 
     for (let key in data) {

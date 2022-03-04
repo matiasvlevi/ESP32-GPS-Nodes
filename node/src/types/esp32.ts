@@ -1,3 +1,5 @@
+
+import replaceAll from '../methods/replaceAll'
 import { gpsData } from './gps'
 
 export type ESP32List = {
@@ -28,6 +30,9 @@ export class ESP32 implements Device {
   }
   setPos(lon: string, lat: string) {
     this.gps = { lon, lat }
+  }
+  getID() {
+    return replaceAll(this.mac, ':');
   }
 }
 
