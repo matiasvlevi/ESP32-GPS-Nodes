@@ -1,21 +1,15 @@
 import { gpsData, GPS } from './gps'
 import { dhtData, DHT } from './dht'
 
-
-export interface Device {
-  type: string;
+export interface WiFi {
   ip: string;
+}
+
+export interface Device extends WiFi {
+  type: string;
   mac: string;
   lastUpdated: string;
 }
-
-// Other property "templates" can be added for different peripherials
-// export interface MySensor {
-//   value: string;
-//   setValue(newValue: string): void;
-// }
-// 
-// class ESP8266 implements Device, MySensor { ... }
 
 export class ESP32 implements Device, GPS {
   type: string = 'ESP32';
