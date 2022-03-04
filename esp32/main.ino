@@ -47,10 +47,13 @@ void loop()
     return;
 
   out = gps.getLocation(gpsSerial);
-
+  if (out.lon == 0.0 && out.lat == 0.0)
+    return;
   // Send the request
-  //             http://serverIP:port/hit?lon=LONGITUDE&lat=LATITUDE
+  //             http://serverIP:port/hit?lon=LONGITUDE&lat=LATITUDE&id=MACADRESS
+
   client.println(http::GET("hit", http::location(out.lon, out.lat)));
   client.println();
-  delay(UPDATE_DELAY);
+
+  // delay(UPDATE_DELAY);
 }
