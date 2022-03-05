@@ -6,7 +6,7 @@
 namespace http
 {
   /**
-   * @method location
+   * Get http formatted data for longitude, latitude
    *
    * Format two doubles, into an HTTP parameter string.
    *
@@ -17,24 +17,20 @@ namespace http
   String location(double longitude, double latitude);
 
   /**
-   * @method registerDevice
-   *
-   * @param macAdress Mac adress as a string
+   * Get this device mac adress formatted as http content
    *
    * @example
    * <code>
-   * String myMacAdress = "34:f5:2e:6d:54:da";
-   * String content = http::registerDevice(myMacAdress);
-   *
+   * String content = http::registerDevice();
    * String req = http::GET("api/url/path", content);
    * </code>
    *
    * @return String Formatted register request with mac adress
    */
-  String registerDevice(String macAdress);
+  String registerDevice();
 
   /**
-   * @method GET
+   * Format to a GET request
    *
    * @param path HTTP Call path
    * @param content HTTP Call content

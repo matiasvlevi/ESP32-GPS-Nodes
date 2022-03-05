@@ -19,6 +19,7 @@ struct gpsLocation
 {
   double lat;
   double lon;
+  bool updated;
 };
 
 #endif

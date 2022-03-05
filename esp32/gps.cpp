@@ -8,7 +8,7 @@ GPSDevice::GPSDevice()
 gpsLocation GPSDevice::getLocation(SoftwareSerial &serial)
 {
   uint8_t fail = 0;
-  while (!(device.location.isUpdated()) && fail < 250)
+  while (!(device.location.isUpdated()) && fail < 100)
   {
     if (serial.available() > 0)
     {
@@ -19,7 +19,7 @@ gpsLocation GPSDevice::getLocation(SoftwareSerial &serial)
 
   if (device.location.isUpdated())
   {
-    return {device.location.lat(), device.location.lng()};
+    return {device.location.lat(), device.location.lng(), true};
   };
-  return {0.0, 0.0};
+  return {0.0, 0.0, false};
 };

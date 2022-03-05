@@ -12,10 +12,10 @@ namespace env
 {
   // TODO: Add in separate files
   //  Network
-  const char SSID[] = "YOUR_NETWORK_SSID";
-  const char PASS[] = "YOUR_NETWORK_PASSWORD";
+  const char SSID[] = "RCMP Security";
+  const char PASS[] = "wazzaa123";
   // Your Listener server IP:
-  IPAddress SERVER(192, 168, 225, 213);
+  IPAddress SERVER(192, 168, 117, 213);
   // Listener server Port
   const int PORT = 3000;
 }

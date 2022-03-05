@@ -3,20 +3,20 @@
 
 namespace http
 {
-  String registerDevice(String macAdress)
+  String registerDevice()
   {
-    return "id=" + macAdress + " ";
+    return "id=" + network::getMacAdress();
   }
 
   String location(double longitude, double latitude)
   {
     return String("lon") + "=" + String(longitude, 9) + String("&") +
            String("lat") + "=" + String(latitude, 9) + String("&") +
-           registerDevice(network::getMacAdress());
+           registerDevice();
   }
 
   String GET(String path, String content)
   {
-    return "GET /" + path + "?" + content + "HTTP/1.0";
+    return "GET /" + path + "?" + content + " HTTP/1.0";
   }
 }
