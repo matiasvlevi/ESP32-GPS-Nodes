@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync, existsSync } from 'fs'
 import { config as conf } from 'dotenv'
 import Handlebars from 'handlebars'
 import utils from '../methods'
+import path from 'path'
 
 import logger from '../logger'
 
@@ -41,10 +42,13 @@ class Network<T extends Multi> {
   }
   getDeviceDOM(mac: string) {
     if (!Object.keys(this.devices).includes(mac)) return;
-    let source = readFileSync(utils.getParentPath(2) + "/templates/marker-content.handlebars", 'utf-8');
+
+    let source = readFileSync(path.join(__dirname, '../../templates/marker-content.handlebars'), 'utf-8');
     let template = Handlebars.compile(source);
     return template(this.devices[mac]);
   }
+  // TODO: refactor for dynamic sensors,
+  // Get reference from type in order to create apropriate getters.
   getDeviceDHT(mac: string) {
     if (!Object.keys(this.devices).includes(mac)) return;
     return this.devices[mac].getDht() || {};

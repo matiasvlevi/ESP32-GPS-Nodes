@@ -1,6 +1,6 @@
-import { gpsData, GPS } from './sensors/gps'
-import { dhtData, DHT } from './sensors/dht'
-import { Microcontroller } from './core/Microcontroller';
+import { gpsData, GPS } from '../sensors/gps'
+import { dhtData, DHT } from '../sensors/dht'
+import { Microcontroller } from '../core/Microcontroller';
 
 /**
  *
@@ -10,7 +10,7 @@ import { Microcontroller } from './core/Microcontroller';
  * If we ever have devices with multiple sensors, this is how we define them.
  */
 class EnviroPack implements Microcontroller, GPS, DHT {
-  type = 'EnviroPack';
+  type = this.constructor.name;
   lastUpdated = new Date().toString();
   IP_ADDR; MAC_ADDR;
   constructor(mac: string, ip: string) {
@@ -34,4 +34,4 @@ class EnviroPack implements Microcontroller, GPS, DHT {
   }
 }
 
-export { EnviroPack };
+export default EnviroPack;

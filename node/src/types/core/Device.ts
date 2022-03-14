@@ -4,7 +4,7 @@ import { Microcontroller } from "./Microcontroller";
 type DeviceConstructor<device> = { new(a: string, b: string): device };
 
 class Device implements Microcontroller {
-  type = 'Device';
+  type = this.constructor.name;
   lastUpdated = new Date().toString();
 
   IP_ADDR; MAC_ADDR;

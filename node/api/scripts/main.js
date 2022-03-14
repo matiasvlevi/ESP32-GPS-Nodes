@@ -2,6 +2,7 @@ let map;
 let markers = {};
 let auto = true;
 const TIMEOUT = 1000;
+const HOME = [45.532286, -73.589860];
 
 // Add a marker to the map
 function marker(mapObj, point, html = undefined) {
@@ -28,7 +29,7 @@ async function createMarkers(mapObj, adresses, update = true) {
     let gps = await getDeviceGPS(adresses[i]);
     console.log(gps);
     if (gps.lon !== undefined) {
-      if (update) {
+      if (update && markers[adresses[i]] !== undefined) {
         markers[adresses[i]].setPopupContent(await markerContent(adresses[i]));
         markers[adresses[i]].setLatLng(
           new L.LatLng(gps.lat, gps.lon)
@@ -51,7 +52,7 @@ async function createMarkers(mapObj, adresses, update = true) {
 
 // Window load event
 window.addEventListener('load', () => {
-  map = L.map('map').setView([45.56067369133939, -73.71906214019843], 25);
+  map = L.map('map').setView(HOME, 25);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);

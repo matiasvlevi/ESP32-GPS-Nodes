@@ -1,0 +1,7 @@
+  gps?: gpsData = undefined;
+  setGps(lon: number, lat: number) {
+    this.gps = { lon, lat }
+  }
+  getGps() {
+    return this.gps;
+  }

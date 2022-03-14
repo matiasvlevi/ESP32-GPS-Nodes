@@ -29,13 +29,21 @@ class Simulation<T extends Multi> {
       this.devices.push(new Simulated(deviceType, i, this));
     }
   }
+  sample = SampleGenerator;
 
   static URL = `http://127.0.0.1:3000`;
-  static random = (rangeEnd: number, rangeStart: number) => Simulation.map(Math.random(), rangeStart, rangeEnd);
-  static map = (v: number, c: number, d: number) => (v) * (d - c) + c;
-  static delay = async (rangeStart: number, rangeEnd: number) => await delay(Simulation.random(rangeStart, rangeEnd));
 
-  sample = SampleGenerator;
+  static random = 
+    (rangeEnd: number, rangeStart: number) =>
+    Simulation.map(Math.random(), rangeStart, rangeEnd);
+
+  static map = 
+    (v: number, c: number, d: number) => (v) * (d - c) + c;
+
+  static delay = 
+    async (rangeStart: number, rangeEnd: number) =>
+     await delay(Simulation.random(rangeStart, rangeEnd));
+
   async start() {
     await this.register();
     await this.hit();

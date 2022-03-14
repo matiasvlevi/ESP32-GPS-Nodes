@@ -1,4 +1,5 @@
-import express from 'express';
+import express from 'express'
+import path from 'path'
 
 import utils from './methods/'
 import logger from './logger/'
@@ -66,7 +67,9 @@ server.get('/getDeviceGPS', (req, res) => {
 
 // host the web application directory,
 // allowing access to the 'data.json' through http, and map webpages.  
-server.use(express.static(utils.getParentPath(2) + '/api'));
+const myPath = path.join(__dirname, '../api/');
+console.log(myPath);
+server.use(express.static(myPath));
 
 // Server listen
 server.listen(network.SERVER_PORT, () => {

@@ -7,7 +7,8 @@
     "sim": "node ./node/bin/simulator/index.js",
     "server": "node ./node/bin/index.js",
     "build": "tsc -p ./node",
-    "clear": "echo {} > ./node/api/data.json && echo [] > ./node/api/adresses.json"
+    "clear": "echo {} > ./node/api/data.json && echo [] > ./node/api/adresses.json",
+    "createDevice":"node ./node/bin/types/sdk/create.js"
   },
   "keywords": [],
   "author": "Club Prog Momo.",

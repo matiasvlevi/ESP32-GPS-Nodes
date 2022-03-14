@@ -1,9 +1,8 @@
-import { gpsData, GPS } from './sensors/gps'
+import { gpsData, GPS } from '../sensors/gps'
+import { Microcontroller } from '../core/Microcontroller';
 
-import { Microcontroller } from './core/Microcontroller';
-
-export class ESP32 implements Microcontroller, GPS {
-  type = 'ESP32';
+class ESP32 implements Microcontroller, GPS {
+  type = this.constructor.name;
   lastUpdated = new Date().toString();
 
   IP_ADDR; MAC_ADDR;
@@ -20,3 +19,4 @@ export class ESP32 implements Microcontroller, GPS {
   }
 }
 
+export default ESP32;

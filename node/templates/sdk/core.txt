@@ -1,0 +1,12 @@
+class ${deviceName} implements ${features} {
+  type = this.constructor.name;
+  lastUpdated = new Date().toString();
+
+  IP_ADDR; MAC_ADDR;
+  constructor(mac: string, ip: string) {
+    this.MAC_ADDR = mac; this.IP_ADDR = ip;
+  }
+
+  ${featureImplementation}
+
+}
