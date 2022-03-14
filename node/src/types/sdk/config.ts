@@ -1,10 +1,12 @@
+import TemplateGenerator from "./generator";
+import {MAP} from './generator'
 
-
-const optionConfig = {
-    features:{
+const optionConfig:MAP<any> = {
+    'features':{
         name:'features',
-        action: (config:any, input:string)=>{
-            config.features
+        action: (gen:TemplateGenerator, content:string)=>{
+
+            gen.features.push(...content.split(','));
         }
     }
 }

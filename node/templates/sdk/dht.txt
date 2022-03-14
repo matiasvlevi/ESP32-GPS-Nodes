@@ -1,0 +1,7 @@
+dht?: dhtData = undefined;
+setDht(humidity: number, temperature: number): void {
+    this.dht = { humidity, temperature }
+};
+getDht(): dhtData | void {
+    return this.dht;
+};

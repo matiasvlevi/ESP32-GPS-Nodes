@@ -1,4 +1,4 @@
-class ${deviceName} implements ${features} {
+class ${deviceName} ${features} {
   type = this.constructor.name;
   lastUpdated = new Date().toString();
 
