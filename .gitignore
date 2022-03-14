@@ -3,3 +3,4 @@ node/.env
 esp32/uenv.h
 bin/
 node/api/data.json
+node/api/adresses.json

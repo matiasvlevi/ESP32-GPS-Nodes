@@ -4,7 +4,10 @@
   "description": "",
   "main": "./node/bin/index.js",
   "scripts": {
-    "server": "node ./node/bin/index.js"
+    "sim": "node ./node/bin/simulator/index.js",
+    "server": "node ./node/bin/index.js",
+    "build": "tsc -p ./node",
+    "clear": "echo {} > ./node/api/data.json && echo [] > ./node/api/adresses.json"
   },
   "keywords": [],
   "author": "Club Prog Momo.",

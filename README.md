@@ -81,11 +81,21 @@ http://arduino.esp8266.com/stable/package_esp8266com_index.json
 Install dependencies
 
 ```
+npm i -g typescript
+```
+
+```
 cd node
 npm ci
 ```
 
+<br/>
+
 Run from project root
+
+```
+npm run build
+```
 
 ```
 npm run server

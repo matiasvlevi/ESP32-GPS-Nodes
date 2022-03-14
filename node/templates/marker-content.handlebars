@@ -1,0 +1,18 @@
+<h2 class="marker-title">{{MAC_ADDR}}</h2>
+<p>IP: {{IP_ADDR}}</p>
+<br />
+
+{{#if gps}}
+<h4>GPS</h4>
+<p>longitude: {{gps.lon}}</p>
+<p>latitude: {{gps.lat}}</p>
+{{/if}}
+
+{{#if dht}}
+<h4>DHT</h4>
+<p>temperature: {{dht.temperature}}</p>
+<p>humidity: {{dht.humidity}}</p>
+{{/if}}
+
+<br />
+<p>{{lastUpdated}}</p>

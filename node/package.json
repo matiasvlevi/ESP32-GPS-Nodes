@@ -11,6 +11,7 @@
     "@types/express": "^4.17.13",
     "@types/node": "^17.0.21",
     "dotenv": "^16.0.0",
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "handlebars": "^4.7.7"
   }
 }

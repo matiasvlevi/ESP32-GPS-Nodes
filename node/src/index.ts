@@ -7,36 +7,61 @@ import network from './network/'
 const server: express.Express = express();
 
 // Current way of recieving from the ESP32
-server.get('/hit', (req) => {
+server.get('/hit', (req, res) => {
   // Get mac adress from call parameters
   if (typeof req.query.id !== 'string') return;
-  let mac: string = req.query.id;
 
   network.load();
-  network.update(req, mac,
-    `${req.query['lon']}`,
-    `${req.query['lat']}`
+
+  network.update(req, req.query.id,
+    {
+      gps: {
+        lon: req.query['lon'],
+        lat: req.query['lat']
+      },
+      dht: {
+        temperature: req.query['temperature'],
+        humidity: req.query['humidity']
+      }
+    }
   );
   network.save();
 
   // Log update
-  logger.hit(mac, req.query);
+  logger.hit(req.query.id, req.query);
+
+  res.send({ status: "OK" });
 });
 
-server.get('/register', (req) => {
+server.get('/register', (req, res) => {
   // Get mac adress from call parameters
   if (typeof req.query.id !== 'string') return;
-  let mac: string = req.query.id;
 
   // get the device IP from the client request
   const deviceIp = utils.getIPFromRequest(req);
 
   network.load();
-  network.addDevice(mac, deviceIp);
+  network.addDevice(req.query.id, deviceIp);
   network.save();
 
   // Display new device's info in the console
-  logger.login(mac);
+  logger.login(req.query.id);
+
+  res.send({ status: "OK" });
+});
+
+server.get('/getDeviceDom', (req, res) => {
+  if (typeof req.query.id !== 'string') return;
+  res.setHeader('content-type', 'text/json');
+  res.send(JSON.stringify({
+    DOM: network.getDeviceDOM(req.query.id)
+  }));
+});
+
+server.get('/getDeviceGPS', (req, res) => {
+  if (typeof req.query.id !== 'string') return;
+  res.setHeader('content-type', 'text/json');
+  res.send(JSON.stringify(network.getDeviceGPS(req.query.id)));
 });
 
 // host the web application directory,

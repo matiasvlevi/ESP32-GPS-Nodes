@@ -1,31 +1,22 @@
-import { gpsData, GPS } from './gps'
-import { dhtData, DHT } from './dht'
+import { gpsData, GPS } from './sensors/gps'
 
-export interface WiFi {
-  ip: string;
-}
+import { Microcontroller } from './core/Microcontroller';
 
-export interface Device extends WiFi {
-  type: string;
-  mac: string;
-  lastUpdated: string;
-}
+export class ESP32 implements Microcontroller, GPS {
+  type = 'ESP32';
+  lastUpdated = new Date().toString();
 
-export class ESP32 implements Device, GPS {
-  type: string = 'ESP32';
-  lastUpdated: string = new Date().toString();
-
-  ip: string; mac: string;
+  IP_ADDR; MAC_ADDR;
   constructor(mac: string, ip: string) {
-    this.ip = ip; this.mac = mac;
+    this.MAC_ADDR = mac; this.IP_ADDR = ip;
   }
 
   gps?: gpsData = undefined;
-  setGps(lon: string, lat: string) {
+  setGps(lon: number, lat: number) {
     this.gps = { lon, lat }
+  }
+  getGps() {
+    return this.gps;
   }
 }
 
-export type ESP32_KEYMAP = {
-  [key: string]: ESP32;
-}

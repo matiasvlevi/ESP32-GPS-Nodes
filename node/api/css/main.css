@@ -2,6 +2,10 @@ html,body {
   margin: 0rem;
 }
 
+p {
+  margin: 0.1rem !important;
+}
+
 #map { 
   min-height: 100vh;
   height: 100vh !important;
@@ -9,3 +13,12 @@ html,body {
   width: 100vw !important;
 }
 
+.marker-content {
+  padding:0.1em;
+  width:fit-content;
+  height:fit-content;
+}
+
+.marker-title {
+  margin: 0.1rem;
+}

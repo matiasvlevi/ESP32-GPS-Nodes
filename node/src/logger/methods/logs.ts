@@ -4,7 +4,7 @@ import Logger from '../def'
 export function login(mac: string): void {
   console.log(
     `Device [\x1b[32m${mac}\x1b[0m] logged in ` +
-    `with ip  [\x1b[32m${network.getDevice(mac)?.ip || 'X.X.X.X'}\x1b[0m]`
+    `with ip  [\x1b[32m${network.getDevice(mac)?.IP_ADDR || 'X.X.X.X'}\x1b[0m]`
   );
 }
 
