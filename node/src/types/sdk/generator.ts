@@ -25,7 +25,7 @@ class TemplateGenerator {
         for (let option in this.options) {
             for (let available in optionConfig) {
                 if (option !== available) continue;
-
+                
                 // Run option action
                 optionConfig[available].action(
                     this, 
@@ -36,7 +36,7 @@ class TemplateGenerator {
     }
     static TEMPLATE:MAP<string> = {
         core: readFileSync(path.join(__dirname,'../../../templates/sdk/core.txt'),'utf-8'),
-        gps: readFileSync(path.join(__dirname, '../../../templates/sdk/gps.txt'), 'utf-8').replace('\n','\n\t'),
+        gps: readFileSync(path.join(__dirname, '../../../templates/sdk/gps.txt'), 'utf-8'),
         dht: readFileSync(path.join(__dirname, '../../../templates/sdk/dht.txt'),'utf-8')
     }
 
@@ -57,11 +57,10 @@ class TemplateGenerator {
         }
         return entries;
     }
-
-    // Take in a template, and a content object
     static process (temp:string, content: any):string  {
         
         let template:string = temp;
+
         let source:string = template;
         template.match(/\${.*?}/gm)?.forEach((m)=>{
             let values = m.match(/(?<=\$\{).*?(?=\})/gm);
@@ -86,29 +85,44 @@ class TemplateGenerator {
             'utf-8'
         );
     }
+
+    formatImports() {
+        let stream:string = `import { Microcontroller } from '../core/Microcontroller'\n`;
+        for (let i = 1; i < this.features.length; i ++) {
+            let sensor = this.features[i].toLocaleLowerCase();
+            stream+=`import { ${this.features[i]}, ${sensor}Data } from '../sensors/${sensor}'\n`;
+        }
+        return stream;
+    }
     // TODO: generate code snippets for all features,
     // then generate the core source code and assemble everything
     getData():string {
 
-        this.features.push();
-        
         let data = {
+            imports: this.formatImports(),
             features:`implements ${this.features.join(', ')}`,
             deviceName: this.deviceName
         }
         let coreSource:string = TemplateGenerator.process(TemplateGenerator.TEMPLATE.core, data);
-        let source:string = coreSource;
-        console.log(this.features)
+
         let featureImplementation:string = '';
+        let key:string;
         for (let i = 0; i < this.features.length; i++) {
-            if (this.features[i] === undefined) i+1; 
-            featureImplementation += TemplateGenerator.TEMPLATE[this.features[i].toLocaleLowerCase()] + '\n';
+ 
+            key = this.features[i].toLocaleLowerCase();
+            console.log([TemplateGenerator.TEMPLATE[key]])
+            if (TemplateGenerator.TEMPLATE[key] !== undefined)  {
+                featureImplementation += 
+                    `\n\t${TemplateGenerator.TEMPLATE[key].split(/\n/gm).filter(x=>(x.length>0)).join('\n\t')}\n\t`
+            }
         }
-        source = TemplateGenerator.process(
-            source,
+
+        console.log('thisone',[featureImplementation]);
+        coreSource = TemplateGenerator.process(
+            coreSource,
             {featureImplementation}
         )
-        return source;
+        return coreSource;
     }
 }
 
