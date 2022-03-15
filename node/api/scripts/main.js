@@ -15,6 +15,21 @@ function marker(mapObj, point, html = undefined) {
   return m;
 }
 
+async function initMarker(map, gps, key) {
+  markers[key] = marker(
+    map,
+    gps,
+    await markerContent(key) // Custom DOM element
+  );
+}
+
+async function updateMarker(gps, key) {
+  markers[key].setPopupContent(await markerContent(key));
+  markers[key].setLatLng(
+    new L.LatLng(gps.lat, gps.lon)
+  );
+}
+
 // Load ESP32 data 
 function loadMarkers(update = true) {
   console.log("Fetching nodes data")
@@ -27,23 +42,13 @@ function loadMarkers(update = true) {
 async function createMarkers(mapObj, adresses, update = true) {
   for (let i = 0; i < adresses.length; i++) {
     let gps = await getDeviceGPS(adresses[i]);
-    console.log(gps);
-    if (gps.lon !== undefined) {
-      if (update && markers[adresses[i]] !== undefined) {
-        markers[adresses[i]].setPopupContent(await markerContent(adresses[i]));
-        markers[adresses[i]].setLatLng(
-          new L.LatLng(gps.lat, gps.lon)
-        );
-      } else {
-        // Save marker with the same index as it's corresponding node.
-        markers[adresses[i]] = marker(
-          mapObj,
-          gps,
-          await markerContent(adresses[i]) // Custom DOM element
-        );
-      }
-
-    }
+    if (gps.lon === undefined) continue;
+    if (update && markers[adresses[i]] !== undefined) {
+      await updateMarker(gps, adresses[i]);
+    } else {
+      // Save marker with the same index as it's corresponding node.
+      await initMarker(mapObj, gps, adresses[i]);
+    }    
   }
 
   // Auto refresh
