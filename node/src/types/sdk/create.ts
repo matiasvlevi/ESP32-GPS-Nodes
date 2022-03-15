@@ -1,14 +1,12 @@
 import { writeFileSync, readFileSync } from "fs"
 import path from 'path'
-import optionConfig from "./config"
 import TemplateGenerator from "./generator"
-import {queryPair, MAP} from './generator'
 
 
 // See generator.ts
 const main = (args:string[]) => {
 
-    const devicePath = path.join(__dirname, args[0]);
+    const devicePath = path.join(__dirname, `../../../src/types/devices/${args[0]}.ts`);
 
     let userValues:TemplateGenerator = new TemplateGenerator(args[0], args);
     const deviceSource:string = userValues.getData();
