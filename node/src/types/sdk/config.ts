@@ -5,8 +5,8 @@ const optionConfig:MAP<any> = {
     'features':{
         name:'features',
         action: (gen:TemplateGenerator, content:string)=>{
-
-            gen.features.push(...content.split(','));
+            let arr = content.split(','); 
+            gen.features.push(...arr);
         }
     }
 }
